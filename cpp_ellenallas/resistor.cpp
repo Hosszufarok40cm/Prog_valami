@@ -13,24 +13,29 @@
 
 #include "resistor.h"
 
-void Resistor::setDef(double r){
-    defR = r;
+double Resistor::defR = 98;
+
+Resistor::Resistor(){
+    this->R = defR;
+}
+Resistor::Resistor(double r){
+    this->R = r;
 }
 Resistor Resistor::operator+(const Resistor& r) const{
-    Resistor uj;
-    uj.R = R+r.R;
+    Resistor uj((this->R)+r.R);
     return uj;
 }
 Resistor Resistor::operator%(const Resistor& r) const{
-    Resistor uj;
-    uj.R = 1/((1/R)+(1/r.R));
+    Resistor uj(1/((1/this->R)+(1/r.R)));
     return uj;
 }
 Resistor operator*(int n, const Resistor& r){
     if(n <= 0){
         throw "UG050E";
-    }else{
-        Resistor uj(n * r.getR());
-        return uj;
     }
+    Resistor uj(n*r.getR());
+    return uj;
+}
+void Resistor::setDef(double r){
+    defR = r;
 }
